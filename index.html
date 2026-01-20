@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NYC Yellow Taxi 2023 — Interactive Trip Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="app-header">
+    <div class="title-block">
+      <h1>NYC Yellow Taxi 2023 — Trip Explorer</h1>
+      <p class="subtitle">
+        Explore temporal demand patterns, fare–distance relationships, payment behaviors, and pickup→dropoff flows.
+        Built with D3 (SVG) + coordinated views.
+      </p>
+    </div>
+
+    <div class="controls">
+      <div class="control">
+        <label for="paymentSelect">Payment type</label>
+        <select id="paymentSelect">
+          <option value="all">All</option>
+          <option value="1">Credit card</option>
+          <option value="2">Cash</option>
+          <option value="3">No charge</option>
+          <option value="4">Dispute</option>
+          <option value="5">Unknown</option>
+          <option value="6">Voided trip</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <button id="resetBtn" class="btn">Reset all filters</button>
+      </div>
+
+      <div class="control filter-readout" id="filterReadout" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <main class="dashboard" id="dashboard">
+    <section class="panel" id="timePanel">
+      <div class="panel-header">
+        <h2>Trips over time</h2>
+        <p class="panel-hint">Brush to filter the date range. Hover to see daily details.</p>
+      </div>
+      <svg id="timeSvg"></svg>
+    </section>
+
+    <section class="panel" id="scatterPanel">
+      <div class="panel-header">
+        <h2>Fare vs. distance</h2>
+        <p class="panel-hint">
+          Brush to select a <strong>distance × total-amount</strong> region. Hover points for trip details.
+        </p>
+      </div>
+      <svg id="scatterSvg"></svg>
+    </section>
+
+    <section class="panel" id="histPanel">
+      <div class="panel-header">
+        <h2>Distance distribution</h2>
+        <p class="panel-hint">Brush to filter trip distance (linked bidirectionally with the scatterplot).</p>
+      </div>
+      <svg id="histSvg"></svg>
+    </section>
+
+    <section class="panel" id="heatPanel">
+      <div class="panel-header">
+        <h2>Hour × day-of-week demand</h2>
+        <p class="panel-hint">
+          Heatmap uses the current date brush. Click a cell to filter to a specific hour & weekday.
+        </p>
+      </div>
+      <svg id="heatSvg"></svg>
+    </section>
+
+    <section class="panel" id="boxPanel">
+      <div class="panel-header">
+        <h2>Total amount by payment type</h2>
+        <p class="panel-hint">
+          Box plot shows distributions under the current filters (except payment filter). Click a box to filter.
+        </p>
+      </div>
+      <svg id="boxSvg"></svg>
+    </section>
+
+    <section class="panel" id="sankeyPanel">
+      <div class="panel-header">
+        <h2>Pickup → dropoff flows</h2>
+        <p class="panel-hint">
+          Sankey diagram shows top corridors under current filters. Click a node to filter pickup or dropoff zone.
+        </p>
+      </div>
+      <svg id="sankeySvg"></svg>
+    </section>
+  </main>
+
+  <div id="tooltip" class="tooltip" role="status" aria-hidden="true"></div>
+
+  <!-- D3 (allowed) -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <!-- d3-sankey: a layout helper; marks are still drawn directly in SVG (allowed as a specific-purpose vis module) -->
+  <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
