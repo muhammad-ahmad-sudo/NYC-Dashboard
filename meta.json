@@ -1,8 +1,0 @@
-{
-  "dataset": "2023 Yellow Taxi Trip Data (subset in provided CSV)",
-  "rows_raw": 1048575,
-  "rows_clean": 518087,
-  "sample_size": 50000,
-  "date_min": "2023-01-01",
-  "date_max": "2023-03-12"
-}
